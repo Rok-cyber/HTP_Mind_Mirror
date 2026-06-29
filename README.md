@@ -28,15 +28,19 @@ This project is not just a static UI. The interesting product and engineering wo
 
 ### Basic HTP Report
 
-![Basic HTP report overview](screenshot/1.png)
+<img src="./screenshot/1.png" alt="Basic HTP report overview" width="760">
 
 ### Premium Report
 
-![Premium self-reflection report hero and summary](screenshot/2.png)
+<img src="./screenshot/2.png" alt="Premium self-reflection report hero and summary" width="760">
 
 ### Premium Report Detail
 
-![Premium report detail sections](screenshot/3.png)
+<img src="./screenshot/3.png" alt="Premium report detail sections" width="760">
+
+### Premium Pattern Sections
+
+<img src="./screenshot/4.png" alt="Premium pattern and resource sections" width="760">
 
 ## Architecture
 
