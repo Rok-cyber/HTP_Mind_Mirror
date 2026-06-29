@@ -1,0 +1,139 @@
+@if (report) {
+  <main class="premium-report-shell">
+      <section class="cover-section">
+        <div class="cover-panel">
+          <div class="cover-kicker">Premium Self-Reflection Report</div>
+          <h1>{{ displayReportText(report.title) || 'Premium Self-Reflection Report' }}</h1>
+          <p class="cover-subtitle">A Premium Self-Reflection Report that gently reviews current inner, relational, and self-awareness patterns through HTP-informed signals</p>
+          <div class="cover-tags" aria-label="Report type">
+            <span>HTP-informed</span>
+            <span>Non-diagnostic reflection</span>
+            <span>Relationship and energy patterns</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="notice-card">
+        <strong>Self-reflection note</strong>
+        <p>This report is not for diagnosis or treatment. It is a self-reflection aid for exploring current emotional and relational patterns.</p>
+      </section>
+
+      @if (report.oneLineSummary) {
+        <section class="summary-hero">
+          <span>One-line summary</span>
+          <p>{{ displayReportText(report.oneLineSummary) }}</p>
+        </section>
+      }
+
+      <app-premium-discovery-section [report]="report" />
+
+      @if (report.overallSummary?.body) {
+        <section class="report-card">
+          <p class="section-kicker">Overall Pattern</p>
+          <h2>{{ displayReportText(report.overallSummary?.title) || 'Overall Summary' }}</h2>
+          <p class="body-text">{{ displayReportText(report.overallSummary?.body) }}</p>
+        </section>
+      }
+
+      <app-premium-archetype-hero-card
+        [archetype]="report.archetypeSection"
+        [patterns]="getAllPatternItems()"
+      />
+
+      <app-premium-everyday-scenes [report]="report" />
+
+      <app-premium-pattern-cards-section
+        [corePatterns]="getCorePatternItems()"
+        [tensionPatterns]="getTensionPatternItems()"
+        [resourcePatterns]="getResourceItems()"
+      />
+
+      <app-premium-similar-flow-map
+        [mapView]="similarFlowMap"
+        eyebrow="SIMILAR FLOW MAP · PCA"
+        heading="Similar Flow Map"
+        titleId="similar-flow-map-pca-title"
+      />
+
+      @if (report.archetypeSection?.body) {
+        <section class="report-card archetype-card">
+          <p class="section-kicker">Core Summary</p>
+          <h2>{{ displayReportText(report.archetypeSection?.title) || 'Summary Flow' }}</h2>
+
+          @if (report.archetypeSection?.primaryArchetypeName) {
+            <div class="primary-label">{{ displayReportText(report.archetypeSection?.primaryArchetypeName) }}</div>
+          }
+
+          <p class="body-text">{{ displayReportText(report.archetypeSection?.body) }}</p>
+
+          @if (hasListItems(report.archetypeSection?.secondaryNotes)) {
+            <div class="sub-block">
+              <h3>Additional Lenses</h3>
+              <ul>
+                @for (note of report.archetypeSection?.secondaryNotes; track trackText($index, note)) {
+                  <li>{{ displayReportText(note) }}</li>
+                }
+              </ul>
+            </div>
+          }
+
+          @if (report.archetypeSection?.reflectionFocus) {
+            <div class="question-callout">
+              <span>Reflection Focus</span>
+              <p>{{ displayReportText(report.archetypeSection?.reflectionFocus) }}</p>
+            </div>
+          }
+        </section>
+      }
+
+      <app-premium-pattern-detail-section
+        [section]="report.corePatternSection"
+        kicker="Evidence Patterns"
+        defaultTitle="Core Patterns"
+        cardLabel="Evidence Flow"
+        cardFallbackTitle="Pattern"
+      />
+
+      <app-premium-pattern-detail-section
+        [section]="report.tensionSection"
+        kicker="Tension Flow"
+        defaultTitle="Tension Pattern"
+        cardLabel="Supporting Evidence"
+        cardFallbackTitle="Tension Flow"
+        tone="tension"
+      />
+
+      <app-premium-resource-detail-section [section]="report.resourceSection" />
+
+      <section class="report-card">
+        <p class="section-kicker">MBTI Context</p>
+        <h2>{{ displayReportText(report.mbtiHtpComparisonSection?.title) || 'MBTI Context' }}</h2>
+        @if (report.mbtiHtpComparisonSection?.available !== false && report.mbtiHtpComparisonSection?.body) {
+          <p class="body-text">{{ displayReportText(report.mbtiHtpComparisonSection?.body) }}</p>
+          @if (hasListItems(report.mbtiHtpComparisonSection?.keySignals)) {
+            <div class="chip-row chip-row--large" aria-label="MBTI Context Signals">
+              @for (signal of report.mbtiHtpComparisonSection?.keySignals; track trackText($index, signal)) {
+                <span>{{ displayReportText(signal) }}</span>
+              }
+            </div>
+          }
+        } @else {
+          <p class="body-text">No MBTI context was provided, so this report focuses on HTP-informed patterns.</p>
+        }
+      </section>
+
+      <app-premium-reflection-questions-section [section]="report.reflectionSection" />
+
+      <app-premium-growth-direction-section [section]="report.growthDirectionSection" />
+
+      <app-premium-conversation-starter-section [section]="report.conversationStarterSection" />
+
+      <app-premium-reflection-export-section [report]="report" />
+
+      @if (report.safetyNote) {
+        <footer class="safety-note">
+          {{ displayReportText(report.safetyNote) }}
+        </footer>
+      }
+  </main>
+}

@@ -1,0 +1,70 @@
+:host {
+  display: block;
+}
+
+.everyday-scenes {
+  margin-top: 22px;
+  border: 1px solid rgba(17, 24, 39, 0.08);
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.82);
+  padding: clamp(20px, 4vw, 30px);
+}
+
+.scene-header p {
+  margin: 0;
+  color: #49675f;
+  font-size: 0.76rem;
+  font-weight: 900;
+}
+
+.scene-header h2 {
+  margin: 8px 0 0;
+  color: #111827;
+  font-size: clamp(1.25rem, 2.4vw, 1.8rem);
+  font-weight: 900;
+  letter-spacing: 0;
+}
+
+.scene-header span {
+  display: block;
+  margin-top: 8px;
+  color: #4b5563;
+  line-height: 1.65;
+}
+
+.scene-grid {
+  display: grid;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.scene-card {
+  border-radius: 18px;
+  background: rgba(247, 248, 245, 0.94);
+  padding: 17px;
+}
+
+.scene-card span {
+  color: #49675f;
+  font-size: 0.75rem;
+  font-weight: 900;
+}
+
+.scene-card h3 {
+  margin: 8px 0 0;
+  color: #111827;
+  font-size: 1rem;
+  font-weight: 900;
+}
+
+.scene-card p {
+  margin: 10px 0 0;
+  color: #4b5563;
+  line-height: 1.68;
+}
+
+@media (min-width: 820px) {
+  .scene-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}

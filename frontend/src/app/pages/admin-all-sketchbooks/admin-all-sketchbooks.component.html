@@ -1,0 +1,107 @@
+<main class="min-h-screen bg-paper px-5 py-8 sm:px-8 lg:px-10">
+  <section class="mx-auto max-w-6xl">
+    <div class="flex flex-wrap items-center gap-3">
+      <a routerLink="/admin/dashboard" class="text-sm font-bold text-moss">대시보드</a>
+      <span class="text-sm font-bold text-graphite">/</span>
+      <a routerLink="/admin/members" class="text-sm font-bold text-moss">멤버 관리</a>
+      <span class="text-sm font-bold text-graphite">/</span>
+      <span class="text-sm font-bold text-ink">전체 스케치북</span>
+    </div>
+    <h1 class="mt-3 text-3xl font-extrabold text-ink sm:text-4xl">전체 스케치북 관리</h1>
+    <p class="mt-3 max-w-2xl text-sm leading-7 text-graphite">최근 등록된 active 스케치북을 기준으로 분석 대상을 확인합니다.</p>
+  </section>
+
+  <section class="mx-auto mt-7 max-w-6xl rounded-lg border border-ink/10 bg-white p-5 shadow-report">
+    @if (state$ | async; as state) {
+      @if (notice) {
+        <p class="mb-4 rounded-lg border border-saffron/30 bg-saffron/10 px-4 py-3 text-sm font-bold text-ink">{{ notice }}</p>
+      }
+
+      @if (state.status === 'loading') {
+        <p class="text-sm font-bold text-graphite">스케치북 목록을 불러오는 중입니다</p>
+      } @else if (state.status === 'error') {
+        <p class="rounded-lg border border-coral/30 bg-coral/10 px-4 py-3 text-sm font-bold text-coral">{{ state.message }}</p>
+      } @else {
+        <div class="mb-4 flex flex-wrap gap-2">
+          @for (filter of filters; track filter.value) {
+            <button
+              type="button"
+              class="rounded-lg border border-ink/10 px-4 py-2 text-sm font-extrabold transition"
+              [class.border-moss]="activeFilter === filter.value"
+              [class.bg-moss]="activeFilter === filter.value"
+              [class.text-white]="activeFilter === filter.value"
+              [class.bg-white]="activeFilter !== filter.value"
+              [class.text-graphite]="activeFilter !== filter.value"
+              (click)="setFilter(filter.value)"
+            >
+              {{ filter.label }}
+            </button>
+          }
+        </div>
+
+        <div class="overflow-x-auto rounded-lg border border-ink/10">
+          <table class="w-full min-w-[980px] border-collapse text-left text-sm">
+            <thead class="bg-pearl text-xs font-bold tracking-[0.12em] text-graphite">
+              <tr>
+                <th class="px-4 py-3">sb_no</th>
+                <th class="px-4 py-3">검사 대상 이름</th>
+                <th class="px-4 py-3">회원 이름</th>
+                <th class="px-4 py-3 text-right">이미지 수</th>
+                <th class="px-4 py-3">등록일</th>
+                <th class="w-28 min-w-28 px-4 py-3 whitespace-nowrap">분석 상태</th>
+                <th class="px-4 py-3 text-right">actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (sketchbook of filteredSketchbooks(state.sketchbooks); track sketchbook.sbNo) {
+                <tr class="border-t border-ink/10 hover:bg-paper">
+                  <td class="px-4 py-3 font-bold text-graphite">{{ sketchbook.sbNo }}</td>
+                  <td class="px-4 py-3 font-extrabold text-ink">{{ sketchbook.name }}</td>
+                  <td class="px-4 py-3 text-graphite">{{ sketchbook.memberName || '회원 이름 없음' }}</td>
+                  <td class="px-4 py-3 text-right font-bold text-graphite">{{ sketchbook.imageCount }}</td>
+                  <td class="px-4 py-3 text-graphite">{{ sketchbook.regdate || '날짜 없음' }}</td>
+                  <td class="w-28 min-w-28 px-4 py-3 whitespace-nowrap">
+                    <span
+                      class="inline-flex min-w-20 justify-center rounded-full px-3 py-1 text-xs font-extrabold whitespace-nowrap"
+                      [class.bg-moss]="sketchbook.analysisStatus === '분석 완료'"
+                      [class.text-white]="sketchbook.analysisStatus === '분석 완료'"
+                      [class.bg-saffron]="sketchbook.analysisStatus === '분석 필요'"
+                      [class.text-ink]="sketchbook.analysisStatus === '분석 필요'"
+                    >
+                      {{ sketchbook.analysisStatus }}
+                    </span>
+                  </td>
+                  <td class="px-4 py-3">
+                    <div class="flex flex-wrap justify-end gap-2">
+                      <button type="button" class="rounded-lg bg-ink px-3 py-2 text-xs font-extrabold text-white" (click)="openReport(sketchbook)">
+                        리포트 보기
+                      </button>
+                      <a [routerLink]="['/admin/sketchbooks', sketchbook.sbNo, 'profile']" class="rounded-lg border border-moss/30 bg-moss/10 px-3 py-2 text-xs font-bold text-moss">
+                        MBTI 수정
+                      </a>
+                      <a [routerLink]="['/admin/premium-reports', sketchbook.sbNo, 'history']" class="rounded-lg border border-ink/10 bg-white px-3 py-2 text-xs font-bold text-ink">
+                        프리미엄
+                      </a>
+
+                      @if (shouldShowAnalyze(sketchbook)) {
+                        <button type="button" class="rounded-lg border border-ink/10 bg-white px-3 py-2 text-xs font-bold text-ink" (click)="analyze(sketchbook)">
+                          분석하기
+                        </button>
+                      }
+                    </div>
+                  </td>
+                </tr>
+              } @empty {
+                <tr>
+                  <td class="border-t border-ink/10 px-4 py-8 text-center text-sm font-bold text-graphite" colspan="7">
+                    해당 조건의 스케치북이 없습니다
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      }
+    }
+  </section>
+</main>

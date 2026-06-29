@@ -1,0 +1,19 @@
+@if (getSceneCards().length > 0) {
+  <section class="everyday-scenes" aria-labelledby="premium-everyday-scenes-title">
+    <div class="scene-header">
+      <p>LIFE CONTEXT</p>
+      <h2 id="premium-everyday-scenes-title">In Everyday Scenes</h2>
+      <span>This section translates the result patterns into everyday situations. Use only what feels relevant.</span>
+    </div>
+
+    <div class="scene-grid">
+      @for (card of getSceneCards(); track trackScene($index, card)) {
+        <article class="scene-card">
+          <span>{{ card.patternName || 'Daily-life Cue' }}</span>
+          <h3>{{ card.title }}</h3>
+          <p>{{ card.scene }}</p>
+        </article>
+      }
+    </div>
+  </section>
+}

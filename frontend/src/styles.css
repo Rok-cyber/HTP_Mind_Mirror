@@ -1,0 +1,54 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  background: #f7f8f5;
+  color: #111827;
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+}
+
+a {
+  color: inherit;
+}
+
+.apexcharts-tooltip {
+  border-radius: 8px !important;
+  border: 1px solid rgba(17, 24, 39, 0.12) !important;
+  box-shadow: 0 16px 40px rgba(17, 24, 39, 0.14) !important;
+}
+
+.legacy-html {
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+
+.legacy-html :where(p, div) {
+  margin: 0 0 0.85rem;
+}
+
+.legacy-html :where(p, div):last-child {
+  margin-bottom: 0;
+}
+
+.legacy-html :where(b, strong) {
+  color: #111827;
+  font-weight: 800;
+}
+
+@media print {
+  .app-shell-header,
+  app-admin-sidebar {
+    display: none !important;
+  }
+}

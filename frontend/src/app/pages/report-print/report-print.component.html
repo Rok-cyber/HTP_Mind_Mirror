@@ -1,0 +1,199 @@
+@if (state$ | async; as state) {
+  @if (state.status === 'loaded') {
+    @let report = state.report;
+    <main class="print-shell">
+      <nav class="screen-toolbar">
+        <a [routerLink]="['/report', state.sbId]">일반 보기</a>
+        <button type="button" (click)="print()">PDF로 프린트</button>
+      </nav>
+
+      <section class="print-page cover-page">
+        <div>
+          <p class="eyebrow">HTP 심리 검사 결과</p>
+          <h1>{{ report.info.user }}</h1>
+          <p class="cover-description">그림 자료, 척도 점수, 종합 해석을 문서 형태로 정리한 리포트입니다.</p>
+        </div>
+
+        <dl class="cover-meta">
+          <div>
+            <dt>검사일</dt>
+            <dd>{{ report.info.date }}</dd>
+          </div>
+          @if (report.info.age) {
+            <div>
+              <dt>나이</dt>
+              <dd>{{ report.info.age }}</dd>
+            </div>
+          }
+          <div>
+            <dt>검사 유형</dt>
+            <dd>{{ report.info.type }}</dd>
+          </div>
+        </dl>
+
+        <div class="print-note">
+          이 리포트는 그림에서 관찰된 여러 신호를 바탕으로 현재의 감정과 관계 흐름을 돌아보는 참고 자료입니다.
+        </div>
+      </section>
+
+      <section class="print-page">
+        <div class="page-heading">
+          <p class="eyebrow">Summary</p>
+          <h2>종합 해석</h2>
+        </div>
+        <div class="summary-copy legacy-html" [innerHTML]="report.summary | legacyHtml: true"></div>
+
+        <div class="score-guide">
+          <div>
+            <span>기준점</span>
+            <strong>50</strong>
+          </div>
+          <div>
+            <span>방식</span>
+            <strong>환산 점수</strong>
+          </div>
+          <div>
+            <span>구성</span>
+            <strong>4개 영역</strong>
+          </div>
+        </div>
+      </section>
+
+      @if ((report.summaryGroups ?? []).length > 0) {
+        <section class="print-page">
+          <div class="page-heading">
+            <p class="eyebrow">Signals</p>
+            <h2>주요 신호 요약</h2>
+          </div>
+
+          <div class="signal-grid">
+            @for (group of report.summaryGroups ?? []; track group.key) {
+              <article class="signal-card border-[#D8D8D0] bg-[#FCFCFA]">
+                <div class="flex items-center justify-between gap-3 border-b border-ink/10 pb-3">
+                  <h3>{{ group.title }}</h3>
+                  <span class="rounded-full border border-ink/10 bg-white px-2 py-0.5 text-[10px] font-bold text-moss">
+                    {{ activeCount(group) }}개 활성
+                  </span>
+                </div>
+                <div class="signal-list">
+                  @for (trait of group.traits; track trait.key) {
+                    <span [ngClass]="signalTraitClasses(trait)">{{ trait.label }}</span>
+                  }
+                </div>
+              </article>
+            }
+          </div>
+        </section>
+      }
+
+      @if (report.images.length > 0) {
+        <section class="print-page">
+          <div class="page-heading">
+            <p class="eyebrow">Drawings</p>
+            <h2>스케치북 원본 그림</h2>
+          </div>
+
+          <div class="image-grid">
+            @for (image of report.images; track imageUrl(image); let index = $index) {
+              <figure>
+                <div class="image-frame">
+                  <img [src]="imageUrl(image)" [alt]="imageLabel(image, index)" />
+                </div>
+                <figcaption>
+                  <strong>{{ imageLabel(image, index) }}</strong>
+                  @if (image.note) {
+                    <span>{{ image.note }}</span>
+                  }
+                </figcaption>
+              </figure>
+            }
+          </div>
+        </section>
+      }
+
+      @for (category of report.categories; track category.key) {
+        <section class="print-page section-page">
+          <div class="page-heading with-score">
+            <div>
+              <p class="eyebrow">{{ category.eyebrow }}</p>
+              <h2>{{ category.title }}</h2>
+            </div>
+            <div class="average-score">
+              <span>평균</span>
+              <strong>{{ categoryAverage(category) }}</strong>
+            </div>
+          </div>
+
+          <p class="section-description">{{ category.description }}</p>
+          <p class="section-summary">{{ category.summary }}</p>
+
+          <div class="mt-5 grid grid-cols-[260px_minmax(0,1fr)] items-center gap-5">
+            <svg viewBox="0 0 240 240" class="h-[260px] w-[260px]" role="img" [attr.aria-label]="category.title + ' 그래프'">
+              @for (ratio of [0.25, 0.5, 0.75, 1]; track ratio) {
+                <polygon [attr.points]="radarGridPoints(category, ratio)" fill="none" stroke="#d6dad2" stroke-width="1" />
+              }
+              @for (metric of category.metrics; track metric.key; let index = $index) {
+                <line x1="120" y1="120" [attr.x2]="radarAxisEnd(category, index).split(',')[0]" [attr.y2]="radarAxisEnd(category, index).split(',')[1]" stroke="#d6dad2" stroke-width="1" />
+                <text
+                  [attr.x]="radarLabelPoint(category, index).split(',')[0]"
+                  [attr.y]="radarLabelPoint(category, index).split(',')[1]"
+                  text-anchor="middle"
+                  dominant-baseline="middle"
+                  fill="#344054"
+                  font-size="10"
+                  font-weight="800"
+                >
+                  {{ metric.label }}
+                </text>
+              }
+              <polygon [attr.points]="radarScorePoints(category)" fill="#49675f" fill-opacity="0.18" stroke="#49675f" stroke-width="3" />
+              @for (metric of category.metrics; track metric.key; let index = $index) {
+                <circle [attr.cx]="radarScorePoints(category).split(' ')[index].split(',')[0]" [attr.cy]="radarScorePoints(category).split(' ')[index].split(',')[1]" r="3.5" fill="#49675f" />
+              }
+            </svg>
+
+            <div class="rounded-lg border border-ink/10 bg-[#f8f7f1] p-4">
+              <h3>그래프 읽기</h3>
+              <p class="mt-2 text-[13px] font-bold leading-7 text-[#48525f]">
+                바깥으로 갈수록 해당 신호의 표시 점수가 높게 나타납니다. 그래프는 각 영역 안에서 어떤 신호가 더 두드러지는지 한눈에 보기 위한 참고 지표입니다.
+              </p>
+            </div>
+          </div>
+
+          <div class="metric-list">
+            @for (metric of category.metrics; track metric.key) {
+              <div class="metric-row">
+                <div>
+                  <strong>{{ metric.label }}</strong>
+                  <span>{{ metric.score }}</span>
+                </div>
+                <div class="metric-track">
+                  <div [style.width.%]="metric.score"></div>
+                </div>
+              </div>
+            }
+          </div>
+
+          <div class="detail-block">
+            <h3>세부 해석</h3>
+            <div class="legacy-html" [innerHTML]="category.detail | legacyHtml"></div>
+          </div>
+        </section>
+      }
+    </main>
+  } @else if (state.status === 'pending') {
+    <main class="print-status">
+      <h1>{{ state.message }}</h1>
+      <p>분석이 완료되면 결과를 확인하실 수 있습니다.</p>
+    </main>
+  } @else if (state.status === 'error') {
+    <main class="print-status">
+      <h1>리포트를 불러올 수 없습니다</h1>
+      <p>{{ state.message }}</p>
+    </main>
+  } @else {
+    <main class="print-status">
+      <p>리포트를 불러오는 중입니다</p>
+    </main>
+  }
+}

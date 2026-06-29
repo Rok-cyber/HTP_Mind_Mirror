@@ -1,0 +1,43 @@
+@if (shouldRender) {
+  <section class="archetype-hero" aria-label="Archetype visual summary">
+    <div class="archetype-hero__layout">
+      @if (imagePath && imageVisible) {
+        <figure class="archetype-hero__image-panel">
+          <img
+            class="archetype-hero__image"
+            [src]="imagePath"
+            [alt]="heroAltText"
+            loading="lazy"
+            (error)="onImageError()"
+          />
+        </figure>
+      }
+
+      <div class="archetype-hero__content">
+        <p class="archetype-hero__eyebrow">{{ eyebrowText }}</p>
+        <h2>{{ heroTitle }}</h2>
+        @if (visualMeta?.nameEn) {
+          <p class="archetype-hero__name-en">{{ visualMeta?.nameEn }}</p>
+        }
+
+        <p class="archetype-hero__one-line">{{ visualMeta?.oneLineKo || 'A key flow to review in the current result.' }}</p>
+        <p class="archetype-hero__description">{{ visualMeta?.descriptionKo || archetype?.body }}</p>
+
+        @if (representativePatternNames.length > 0) {
+          <div class="archetype-hero__chips" aria-label="Representative patterns">
+            @for (patternName of representativePatternNames; track patternName) {
+              <span>{{ patternName }}</span>
+            }
+          </div>
+        }
+
+        @if (visualMeta?.reflectionQuestionKo || archetype?.reflectionFocus) {
+          <div class="archetype-hero__question">
+            <span>Reflection question</span>
+            <p>{{ visualMeta?.reflectionQuestionKo || archetype?.reflectionFocus }}</p>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+}

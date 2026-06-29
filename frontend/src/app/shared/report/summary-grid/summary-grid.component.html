@@ -1,0 +1,36 @@
+<section class="rounded-lg border border-ink/15 bg-white p-4 shadow-report sm:p-5 lg:p-6">
+  <div class="flex flex-col justify-between gap-2 border-b border-ink/10 pb-3 sm:flex-row sm:items-end">
+    <div>
+      <p class="text-xs font-bold uppercase tracking-[0.18em] text-moss">Summary at a Glance</p>
+      <h2 class="mt-1 text-2xl font-extrabold leading-tight text-ink sm:text-3xl">Key Signal Summary</h2>
+    </div>
+    <p class="text-xs font-semibold leading-5 text-graphite/65">
+      Raw score basis
+    </p>
+  </div>
+
+  <div class="mt-5 grid gap-4 md:grid-cols-2 lg:gap-5">
+    @for (group of groups; track group.key) {
+      <article class="rounded-lg border border-[#D8D8D0] bg-[#FCFCFA] p-4 shadow-[0_10px_28px_rgba(17,24,39,0.05)] sm:p-5 lg:p-6">
+        <div class="flex items-center justify-between gap-3 border-b border-ink/10 pb-3">
+          <h3 class="text-base font-extrabold text-ink sm:text-lg">{{ group.title }}</h3>
+          <span class="rounded-full border border-ink/10 bg-white px-2 py-0.5 text-[10px] font-bold text-moss shadow-sm">
+            {{ activeCount(group) }} active
+          </span>
+        </div>
+
+        <div class="mt-4 grid justify-items-center gap-x-4 gap-y-3.5" [ngClass]="groupGridClasses(group)">
+          @for (trait of group.traits; track trait.key) {
+            <span
+              class="flex min-h-[52px] w-full max-w-[132px] items-center justify-center rounded-md border px-3 py-2 text-center text-[13px] font-extrabold leading-tight transition-all duration-150 hover:-translate-y-0.5 hover:border-ink/20 hover:shadow-[0_8px_22px_rgba(17,24,39,0.10)] sm:min-h-[56px] sm:max-w-[148px] sm:text-sm"
+              [ngClass]="traitClasses(trait)"
+              [attr.title]="trait.label + ' / Raw score ' + trait.rawValue"
+            >
+              {{ trait.label }}
+            </span>
+          }
+        </div>
+      </article>
+    }
+  </div>
+</section>

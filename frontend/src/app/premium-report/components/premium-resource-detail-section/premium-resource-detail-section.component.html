@@ -1,0 +1,68 @@
+@if (hasResourceItems()) {
+  <section class="report-card resource-card">
+    <p class="section-kicker">Balance Cues</p>
+    <h2>{{ displayReportText(section?.title) || 'Balance-Supporting Cues' }}</h2>
+    @if (section?.intro) {
+      <p class="section-intro">{{ displayReportText(section?.intro) }}</p>
+    }
+
+    <div class="pattern-grid">
+      @for (item of section?.items; track item.resourceId || item.resourceName) {
+        <article class="pattern-card">
+          <div class="pattern-card-header">
+            <span>{{ displayReportText(item.evidenceLabel) || 'Balance Cues' }}</span>
+            <h3>{{ displayReportText(item.resourceName) || 'Balance Cues' }}</h3>
+          </div>
+
+          @if (item.body) {
+            <p>{{ displayReportText(item.body) }}</p>
+          }
+
+          @if (hasListItems(item.stableEvidence) || hasListItems(item.supportiveEvidence)) {
+            <div class="resource-evidence-grid">
+              @if (hasListItems(item.stableEvidence)) {
+                <div>
+                  <h4><span aria-hidden="true">−</span> Signals That Are Not Excessively High</h4>
+                  <div class="chip-row">
+                    @for (evidence of item.stableEvidence; track trackText($index, evidence)) {
+                      <span>{{ displayStableEvidenceText(evidence) }}</span>
+                    }
+                  </div>
+                </div>
+              }
+
+              @if (hasListItems(item.supportiveEvidence)) {
+                <div>
+                  <h4><span aria-hidden="true">+</span> Signals That Support Balance</h4>
+                  <div class="chip-row">
+                    @for (evidence of item.supportiveEvidence; track trackText($index, evidence)) {
+                      <span>{{ displaySupportiveEvidenceText(evidence) }}</span>
+                    }
+                  </div>
+                </div>
+              }
+            </div>
+          }
+
+          @if (hasListItems(item.relatedPatterns)) {
+            <div class="resource-related">
+              <h4>Patterns to Review for Balance</h4>
+              <div class="context-chip-row">
+                @for (pattern of item.relatedPatterns; track trackText($index, pattern)) {
+                  <span>{{ displayRelatedPatternText(pattern) }}</span>
+                }
+              </div>
+            </div>
+          }
+
+          @if (item.reflectionQuestion) {
+            <div class="question-callout">
+              <span>Reflection question</span>
+              <p>{{ displayReportText(item.reflectionQuestion) }}</p>
+            </div>
+          }
+        </article>
+      }
+    </div>
+  </section>
+}

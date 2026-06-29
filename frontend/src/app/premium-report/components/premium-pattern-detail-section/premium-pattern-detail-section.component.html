@@ -1,0 +1,72 @@
+@if (hasPatternItems()) {
+  <section class="report-card">
+    <p class="section-kicker">{{ kicker }}</p>
+    <h2>{{ displayReportText(section?.title) || defaultTitle }}</h2>
+    @if (section?.intro) {
+      <p class="section-intro">{{ displayReportText(section?.intro) }}</p>
+    }
+    <div class="pattern-grid">
+      @for (item of section?.items; track item.patternName) {
+        <article class="pattern-card" [class.pattern-card--tension]="tone === 'tension'">
+          <div class="pattern-card-header">
+            <span>{{ cardLabel }}</span>
+            <h3>{{ displayReportText(item.patternName) || cardFallbackTitle }}</h3>
+          </div>
+          @if (item.body) {
+            <p>{{ displayReportText(item.body) }}</p>
+          }
+          @if (hasListItems(item.evidence)) {
+            <p class="micro-label">Connected Signals</p>
+            <div class="chip-row" aria-label="Evidence Signals">
+              @for (evidence of item.evidence; track trackText($index, evidence)) {
+                <span>{{ displayReportText(evidence) }}</span>
+              }
+            </div>
+          }
+          @if (hasPatternRichness(item)) {
+            <div class="pattern-richness">
+              @if (hasListItems(item.lifeExamples)) {
+                <div class="richness-block richness-block--scene">
+                  <h4>Everyday Scenes</h4>
+                  <ul>
+                    @for (example of item.lifeExamples; track trackText($index, example)) {
+                      <li>{{ displayReportText(example) }}</li>
+                    }
+                  </ul>
+                </div>
+              }
+
+              @if (hasListItems(item.whenThisAppears)) {
+                <div class="richness-block">
+                  <h4>When It May Stand Out</h4>
+                  <div class="context-chip-row">
+                    @for (context of item.whenThisAppears; track trackText($index, context)) {
+                      <span>{{ displayReportText(context) }}</span>
+                    }
+                  </div>
+                </div>
+              }
+
+              @if (hasListItems(item.growthHints)) {
+                <div class="richness-block">
+                  <h4>Small Growth Cue</h4>
+                  <div class="hint-list">
+                    @for (hint of item.growthHints; track trackText($index, hint)) {
+                      <p>{{ displayReportText(hint) }}</p>
+                    }
+                  </div>
+                </div>
+              }
+            </div>
+          }
+          @if (item.reflectionQuestion) {
+            <div class="question-callout">
+              <span>Reflection Questions</span>
+              <p>{{ displayReportText(item.reflectionQuestion) }}</p>
+            </div>
+          }
+        </article>
+      }
+    </div>
+  </section>
+}

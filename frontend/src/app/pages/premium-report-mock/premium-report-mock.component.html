@@ -1,0 +1,15 @@
+<div class="premium-report-page-shell">
+  @if (state$ | async; as state) {
+    @if (state.status === 'loading') {
+      <section class="state-card">
+        <p>Loading the premium report.</p>
+      </section>
+    } @else if (state.status === 'error') {
+      <section class="state-card state-card--error">
+        <p>{{ state.message }}</p>
+      </section>
+    } @else {
+      <app-premium-report-renderer [report]="state.report" contextLabel="Mock preview"></app-premium-report-renderer>
+    }
+  }
+</div>

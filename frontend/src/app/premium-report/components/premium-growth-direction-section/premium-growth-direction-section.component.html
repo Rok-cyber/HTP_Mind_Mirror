@@ -1,0 +1,43 @@
+@if (section?.body) {
+  <section class="report-card">
+    <p class="section-kicker">Growth Direction</p>
+    <h2>{{ displayReportText(section?.title) || 'Reflection Direction' }}</h2>
+    <p class="body-text">{{ displayReportText(section?.body) }}</p>
+
+    @if (hasListItems(section?.suggestions)) {
+      <div class="growth-subsection">
+        <h3>Suggestion</h3>
+        <div class="soft-card-grid">
+          @for (suggestion of section?.suggestions; track trackText($index, suggestion)) {
+            <p>{{ displayReportText(suggestion) }}</p>
+          }
+        </div>
+      </div>
+    }
+
+    @if (hasListItems(section?.smallExperiments)) {
+      <div class="growth-subsection">
+        <h3>Small Experiment</h3>
+        <div class="experiment-list">
+          @for (experiment of section?.smallExperiments; track trackText($index, experiment)) {
+            <div>
+              <span>{{ $index + 1 }}</span>
+              <p>{{ displayReportText(experiment) }}</p>
+            </div>
+          }
+        </div>
+      </div>
+    }
+
+    @if (hasListItems(section?.nextStepQuestions)) {
+      <div class="growth-subsection">
+        <h3>Next Question</h3>
+        <ul class="next-question-list">
+          @for (question of section?.nextStepQuestions; track trackText($index, question)) {
+            <li>{{ displayReportText(question) }}</li>
+          }
+        </ul>
+      </div>
+    }
+  </section>
+}

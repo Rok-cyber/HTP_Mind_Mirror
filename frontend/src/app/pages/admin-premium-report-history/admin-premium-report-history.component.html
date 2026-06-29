@@ -1,0 +1,78 @@
+<main class="history-shell">
+  <section class="history-container">
+    <nav class="breadcrumbs" aria-label="관리자 이동 경로">
+      <a routerLink="/admin/dashboard">대시보드</a>
+      <span>/</span>
+      <a routerLink="/admin/sketchbooks">전체 스케치북</a>
+      <span>/</span>
+      <span>프리미엄 리포트 기록</span>
+    </nav>
+
+    @if (state$ | async; as state) {
+      @if (state.status === 'loading') {
+        <section class="state-card">
+          <p>프리미엄 리포트 기록을 불러오는 중입니다.</p>
+        </section>
+      } @else if (state.status === 'error') {
+        <section class="state-card state-card--error">
+          <p>{{ state.message }}</p>
+        </section>
+      } @else {
+        <section class="history-hero">
+          <div>
+            <p class="eyebrow">Premium Report History</p>
+            <h1>프리미엄 리포트 생성 기록</h1>
+            <p>sb_no {{ state.sbNo }}에 저장된 프리미엄 리포트 행을 최신순으로 확인합니다. 목록에는 리포트 본문이나 원본 프롬프트가 표시되지 않습니다.</p>
+          </div>
+          <a [routerLink]="['/premium-report', state.sbNo]" class="primary-link">최신 리포트 보기</a>
+        </section>
+
+        @if (state.history.items.length === 0) {
+          <section class="state-card">
+            <p>저장된 프리미엄 리포트 기록이 없습니다.</p>
+          </section>
+        } @else {
+          <section class="history-card">
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>prNo</th>
+                    <th>Provider</th>
+                    <th>Model</th>
+                    <th>Schema</th>
+                    <th>Status</th>
+                    <th>Generated</th>
+                    <th>Tokens</th>
+                    <th>Cost</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (item of state.history.items; track item.prNo) {
+                    <tr>
+                      <td class="mono">{{ item.prNo }}</td>
+                      <td><span class="badge badge--provider">{{ item.provider }}</span></td>
+                      <td class="mono">{{ item.model }}</td>
+                      <td class="mono">{{ item.schemaVersion }}</td>
+                      <td><span class="badge" [class.badge--failed]="item.status === 'failed'">{{ item.status }}</span></td>
+                      <td>{{ item.generatedAt || item.createdAt || '-' }}</td>
+                      <td class="mono">{{ displayTotalTokens(item) }}</td>
+                      <td class="mono">{{ displayEstimatedCost(item) }}</td>
+                      <td>
+                        <div class="action-links">
+                          <a [routerLink]="['/premium-report', state.sbNo, 'versions', item.prNo]" class="row-link">이 버전 보기</a>
+                          <a [routerLink]="['/premium-report', state.sbNo]" class="row-link row-link--muted">최신 보기</a>
+                        </div>
+                      </td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+          </section>
+        }
+      }
+    }
+  </section>
+</main>

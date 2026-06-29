@@ -1,0 +1,103 @@
+@if (mapView) {
+  <section class="similar-flow-section" [attr.aria-labelledby]="titleId">
+    <div class="similar-flow-section__header">
+      <p>{{ eyebrow }}</p>
+      <h2 [id]="titleId">{{ heading }}</h2>
+      <span>{{ description || mapView.captionKo }}</span>
+    </div>
+
+    <div class="similar-flow-notices" aria-label="Similar flow map notice">
+      <span>Anonymous aggregate basis</span>
+      <span>No personal identification</span>
+      <span>For self-understanding only</span>
+    </div>
+
+    <div class="similar-flow-layout">
+      <div class="flow-map-panel">
+        <div class="flow-map" role="group" aria-label="Anonymous report flow map">
+          <span class="flow-region flow-region--relationship">Relationship Flow</span>
+          <span class="flow-region flow-region--energy">Energy Reflection</span>
+          <span class="flow-region flow-region--balance">Recovery and Balance</span>
+          <span class="flow-region flow-region--inner">Inner Regulation</span>
+
+          @for (point of getMapPoints(); track trackMapPoint($index, point)) {
+            <span
+              class="map-point"
+              [style.left.%]="toXPercent(point.x)"
+              [style.top.%]="toYPercent(point.y)"
+              [attr.aria-hidden]="true"
+            ></span>
+          }
+
+          <div
+            class="target-halo"
+            [style.left.%]="getTargetXPercent()"
+            [style.top.%]="getTargetYPercent()"
+            aria-label="My Report Flow"
+          >
+            <span></span>
+          </div>
+
+          @for (dot of getNearbyDots(); track trackNearbyDot($index, dot)) {
+            <button
+              class="nearby-dot"
+              type="button"
+              [class.nearby-dot--selected]="selectedDot?.anonymousId === dot.anonymousId"
+              [style.left.%]="getNearbyXPercent(dot, $index)"
+              [style.top.%]="getNearbyYPercent(dot, $index)"
+              [attr.aria-label]="getDotAriaLabel(dot)"
+              (click)="selectDot(dot)"
+            ></button>
+          }
+        </div>
+
+        <div class="flow-map-caption">
+          <strong>{{ mapView.target.labelKo }}</strong>
+          <button
+            class="flow-map-help"
+            type="button"
+            aria-label="Map distance notice: visual distance is only a guide; selectable points represent anonymous flows with similar signal combinations."
+            title="Visual distance is only a guide; selectable points represent anonymous flows with similar signal combinations."
+          >
+            ?
+          </button>
+          <span>{{ mapView.privacyNoticeKo }}</span>
+        </div>
+      </div>
+
+      <aside class="flow-map-side" aria-label="Nearby flow summary">
+        <div class="selected-flow-card">
+          <p>Nearby Anonymous Flow</p>
+          @if (selectedDot) {
+            <span class="selected-flow-card__badge">{{ getProximityLabel(selectedDot.proximityBand) }}</span>
+            <h3>Selected Anonymous Flow</h3>
+            <div class="chip-row">
+              @for (label of getSelectedSignalLabels(selectedDot); track trackText($index, label)) {
+                <span>{{ label }}</span>
+              }
+            </div>
+          } @else {
+            <h3>Nearby Flows Are Being Prepared</h3>
+            <span>This area will appear once enough nearby anonymous flows are available.</span>
+          }
+        </div>
+
+        @if (mapView.commonSignals.length > 0) {
+          <div class="common-signal-card">
+            <p>Frequently Co-Observed Signals</p>
+            <div class="common-signal-list">
+              @for (signal of mapView.commonSignals; track signal.labelKo) {
+                <div>
+                  <span>{{ getCommonSignalLabel(signal.labelKo) }}</span>
+                  <small>{{ signal.count }} flows observed</small>
+                </div>
+              }
+            </div>
+          </div>
+        }
+
+        <p class="interaction-note">{{ mapView.interactionGuidanceKo }}</p>
+      </aside>
+    </div>
+  </section>
+}

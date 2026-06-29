@@ -1,0 +1,111 @@
+<main class="min-h-screen bg-paper px-5 py-8 sm:px-8 lg:px-10">
+  <section class="mx-auto max-w-6xl">
+    <div class="flex flex-wrap items-center gap-3">
+      <a routerLink="/admin/dashboard" class="text-sm font-bold text-moss">대시보드</a>
+      <span class="text-sm font-bold text-graphite">/</span>
+      <span class="text-sm font-bold text-ink">분석항목관리</span>
+    </div>
+    <div class="mt-3 flex flex-wrap items-end justify-between gap-4">
+      <div>
+        <h1 class="text-3xl font-extrabold text-ink sm:text-4xl">분석항목관리</h1>
+        <p class="mt-3 max-w-2xl text-sm leading-7 text-graphite">검사 유형별 분석 규칙과 해석 문구를 관리합니다.</p>
+      </div>
+      <a routerLink="/admin/analysis-items/new" class="rounded-lg bg-ink px-4 py-3 text-sm font-extrabold text-white">항목 추가</a>
+    </div>
+  </section>
+
+  <section class="mx-auto mt-7 max-w-6xl rounded-lg border border-ink/10 bg-white p-5 shadow-report">
+    @if (state$ | async; as state) {
+      @if (notice) {
+        <p class="mb-4 rounded-lg border border-saffron/30 bg-saffron/10 px-4 py-3 text-sm font-bold text-ink">{{ notice }}</p>
+      }
+
+      @if (state.status === 'loading') {
+        <p class="text-sm font-bold text-graphite">분석항목을 불러오는 중입니다</p>
+      } @else if (state.status === 'error') {
+        <p class="rounded-lg border border-coral/30 bg-coral/10 px-4 py-3 text-sm font-bold text-coral">{{ state.message }}</p>
+      } @else {
+        <div class="space-y-8">
+          @for (group of state.groups; track group.sg_no) {
+            <section>
+              <div class="mb-3 flex flex-wrap items-center justify-between gap-2">
+                <h2 class="text-lg font-extrabold text-ink">{{ group.sg_title || '그룹명 없음' }}</h2>
+                <span class="rounded-full bg-pearl px-3 py-1 text-xs font-extrabold text-graphite">{{ group.items.length }}개 항목</span>
+              </div>
+
+              <div class="overflow-x-auto rounded-lg border border-ink/10">
+                <table class="w-full min-w-[1080px] border-collapse text-left text-sm">
+                  <thead class="bg-pearl text-xs font-bold tracking-[0.08em] text-graphite">
+                    <tr>
+                      <th class="px-4 py-3">si_no</th>
+                      <th class="px-4 py-3">항목명</th>
+                      <th class="px-4 py-3">상태</th>
+                      <th class="px-4 py-3">세부사항</th>
+                      <th class="px-4 py-3">정서 문제</th>
+                      <th class="px-4 py-3">적응 문제</th>
+                      <th class="px-4 py-3">대인관계</th>
+                      <th class="px-4 py-3">사회적 성향</th>
+                      <th class="px-4 py-3 text-right">actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @for (item of group.items; track item.si_no) {
+                      @for (row of item.rows; track $index) {
+                        <tr class="border-t border-ink/10 hover:bg-paper">
+                          @if ($first) {
+                            <td class="px-4 py-3 align-top font-bold text-graphite" [attr.rowspan]="item.rows.length">{{ item.si_no }}</td>
+                            <td class="px-4 py-3 align-top font-extrabold text-ink" [attr.rowspan]="item.rows.length">
+                              {{ item.si_name || '항목명 없음' }}
+                            </td>
+                          }
+                          <td class="px-4 py-3 align-top text-graphite">{{ row.status || '-' }}</td>
+                          <td class="px-4 py-3 align-top text-graphite">{{ row.detail || '-' }}</td>
+                          <td class="px-4 py-3 align-top text-graphite">{{ row.emotion || '-' }}</td>
+                          <td class="px-4 py-3 align-top text-graphite">{{ row.adaptation || '-' }}</td>
+                          <td class="px-4 py-3 align-top text-graphite">{{ row.relationship || '-' }}</td>
+                          <td class="px-4 py-3 align-top text-graphite">{{ row.tendency || '-' }}</td>
+                          @if ($first) {
+                            <td class="px-4 py-3 align-top" [attr.rowspan]="item.rows.length">
+                              <div class="flex justify-end gap-2">
+                                <a [routerLink]="['/admin/analysis-items', item.si_no, 'edit']" class="rounded-lg border border-ink/10 bg-white px-3 py-2 text-xs font-bold text-ink">
+                                  편집
+                                </a>
+                                <button type="button" class="rounded-lg border border-coral/30 bg-white px-3 py-2 text-xs font-bold text-coral" (click)="deleteItem(item)">
+                                  삭제
+                                </button>
+                              </div>
+                            </td>
+                          }
+                        </tr>
+                      } @empty {
+                        <tr class="border-t border-ink/10 hover:bg-paper">
+                          <td class="px-4 py-3 font-bold text-graphite">{{ item.si_no }}</td>
+                          <td class="px-4 py-3 font-extrabold text-ink">{{ item.si_name || '항목명 없음' }}</td>
+                          <td class="px-4 py-3 text-graphite" colspan="6">등록된 규칙 행이 없습니다</td>
+                          <td class="px-4 py-3">
+                            <div class="flex justify-end gap-2">
+                              <a [routerLink]="['/admin/analysis-items', item.si_no, 'edit']" class="rounded-lg border border-ink/10 bg-white px-3 py-2 text-xs font-bold text-ink">
+                                편집
+                              </a>
+                              <button type="button" class="rounded-lg border border-coral/30 bg-white px-3 py-2 text-xs font-bold text-coral" (click)="deleteItem(item)">
+                                삭제
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      }
+                    } @empty {
+                      <tr>
+                        <td class="border-t border-ink/10 px-4 py-8 text-center text-sm font-bold text-graphite" colspan="9">등록된 분석항목이 없습니다</td>
+                      </tr>
+                    }
+                  </tbody>
+                </table>
+              </div>
+            </section>
+          }
+        </div>
+      }
+    }
+  </section>
+</main>

@@ -1,0 +1,59 @@
+@if (report) {
+  <section class="reflection-export-section" aria-labelledby="reflection-export-title">
+    <div class="reflection-export-section__header">
+      <p class="reflection-export-section__eyebrow">CONTINUE REFLECTION</p>
+      <h2 id="reflection-export-title">Continue Reflection</h2>
+      <p>
+        Save the parts that resonate and revisit them with an AI tool, counselor, mentor, or your own journal.
+      </p>
+    </div>
+
+    <div class="reflection-export-notice">
+      <strong>External AI Notice</strong>
+      <p>
+        This material is for self-reflection. If pasted into an external AI tool, that service's privacy and data-use policies apply.
+      </p>
+    </div>
+
+    <div class="reflection-export-actions" aria-label="Export and continue reflection">
+      <article class="reflection-export-card">
+        <div>
+          <span>PDF</span>
+          <h3>Open Print-Friendly Page</h3>
+          <p>Save the report as a PDF from a print-friendly page.</p>
+        </div>
+        <button type="button" (click)="goToPrintPage()">Save PDF</button>
+      </article>
+
+      <article class="reflection-export-card">
+        <div>
+          <span>AI PROMPT</span>
+          <h3>AI Conversation Prompt</h3>
+          <p>A question-led prompt for reflective conversation, not diagnosis.</p>
+        </div>
+        <button type="button" (click)="copyAiPrompt()">{{ getPromptButtonLabel() }}</button>
+        @if (manualPromptText) {
+          <div class="manual-copy-box">
+            <p>Automatic copying is blocked. Select and copy the text manually below.</p>
+            <textarea readonly aria-label="AI Conversation Prompt Copy Manually">{{ manualPromptText }}</textarea>
+          </div>
+        }
+      </article>
+
+      <article class="reflection-export-card">
+        <div>
+          <span>NOTE</span>
+          <h3>Reflection Notes</h3>
+          <p>A paste-ready note with key lines, questions, and small experiments from the report.</p>
+        </div>
+        <button type="button" (click)="copyReflectionNote()">{{ getNoteButtonLabel() }}</button>
+        @if (manualNoteText) {
+          <div class="manual-copy-box">
+            <p>Automatic copying is blocked. Select and copy the text manually below.</p>
+            <textarea readonly aria-label="Reflection Notes Copy Manually">{{ manualNoteText }}</textarea>
+          </div>
+        }
+      </article>
+    </div>
+  </section>
+}

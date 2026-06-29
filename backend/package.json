@@ -1,0 +1,9 @@
+{
+  "name": "htp-report-backend-redacted",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "info": "echo \"Private backend source is redacted in this public portfolio copy. See backend/README.md.\""
+  }
+}

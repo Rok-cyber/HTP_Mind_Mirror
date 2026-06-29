@@ -1,0 +1,74 @@
+:host {
+  display: block;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 18% 0%, rgba(168, 199, 215, 0.22), transparent 34rem),
+    radial-gradient(circle at 86% 12%, rgba(217, 164, 65, 0.12), transparent 28rem),
+    linear-gradient(180deg, #f7f8f5 0%, #fcfcfa 46%, #f6f8f7 100%);
+  color: #111827;
+}
+
+.premium-report-page-shell {
+  min-height: 100vh;
+}
+
+.state-card {
+  margin: 0 auto;
+  max-width: 720px;
+  transform: translateY(80px);
+  border: 1px solid rgba(17, 24, 39, 0.09);
+  border-radius: 24px;
+  background: #fff;
+  box-shadow: 0 24px 80px rgba(17, 24, 39, 0.08);
+  padding: 28px;
+  text-align: center;
+}
+
+.state-card p {
+  margin: 0;
+  color: #374151;
+  line-height: 1.7;
+}
+
+.state-card--error {
+  border-color: rgba(212, 106, 90, 0.35);
+}
+
+.version-label {
+  margin: 0 auto;
+  max-width: 1040px;
+  padding: 24px 20px 0;
+  color: #49675f;
+  font-size: 0.82rem;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+}
+
+.print-action {
+  margin: 0 auto;
+  max-width: 1040px;
+  padding: 18px 20px 0;
+  text-align: right;
+}
+
+.print-action a {
+  display: inline-flex;
+  border: 1px solid rgba(17, 24, 39, 0.1);
+  border-radius: 8px;
+  background: #fff;
+  padding: 10px 14px;
+  color: #111827;
+  font-size: 0.82rem;
+  font-weight: 900;
+  text-decoration: none;
+}
+
+@media (min-width: 760px) {
+  .version-label {
+    padding-inline: 32px;
+  }
+
+  .print-action {
+    padding-inline: 32px;
+  }
+}

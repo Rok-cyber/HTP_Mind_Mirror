@@ -1,0 +1,27 @@
+<div class="premium-report-page-shell">
+  @if (state$ | async; as state) {
+    @if (state.status === 'loading') {
+      <section class="state-card">
+        <p>프리미엄 리포트를 불러오는 중입니다.</p>
+      </section>
+    } @else if (state.status === 'error') {
+      <section class="state-card state-card--error">
+        <p>{{ state.message }}</p>
+      </section>
+    } @else {
+      @if (state.contextLabel) {
+        <div class="version-label">{{ state.contextLabel }}</div>
+      }
+      <div class="print-action">
+        <a [routerLink]="printRoute(state)">
+          PDF용 보기
+        </a>
+      </div>
+      <app-premium-report-renderer
+        [report]="state.report"
+        [similarFlowMap]="state.similarFlowMap"
+        [contextLabel]="state.contextLabel"
+      ></app-premium-report-renderer>
+    }
+  }
+</div>

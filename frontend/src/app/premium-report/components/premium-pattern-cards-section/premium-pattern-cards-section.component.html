@@ -1,0 +1,41 @@
+@if (cards.length > 0) {
+  <section class="pattern-card-section" aria-label="Top pattern cards">
+    <div class="pattern-card-section__header">
+      <p>{{ getSectionEyebrow() }}</p>
+      <h2>{{ getSectionTitle() }}</h2>
+      <span>{{ getSectionDescription() }}</span>
+    </div>
+
+    <div class="pattern-card-section__grid">
+      @for (card of cards; track trackCard($index, card)) {
+        <article class="visual-pattern-card" [class.visual-pattern-card--resource]="card.layer === 'resource'">
+          @if (card.imagePath && card.imageVisible) {
+            <img
+              class="visual-pattern-card__image"
+              [src]="card.imagePath"
+              [alt]="getCardAlt(card)"
+              loading="lazy"
+              (error)="onImageError(card)"
+            />
+          }
+
+          <div class="visual-pattern-card__body">
+            <span
+              class="visual-pattern-card__chip"
+              [class.visual-pattern-card__chip--resource]="card.layer === 'resource'"
+            >
+              {{ getLayerLabel(card.layer) }}
+            </span>
+            <h3>{{ getCardTitle(card) }}</h3>
+            @if (getCardEnglishName(card)) {
+              <p class="visual-pattern-card__en">{{ getCardEnglishName(card) }}</p>
+            }
+            @if (getCardCopy(card)) {
+              <p class="visual-pattern-card__copy">{{ getCardCopy(card) }}</p>
+            }
+          </div>
+        </article>
+      }
+    </div>
+  </section>
+}

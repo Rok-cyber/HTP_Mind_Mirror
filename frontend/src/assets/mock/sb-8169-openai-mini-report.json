@@ -1,0 +1,220 @@
+{
+  "schemaVersion": "premium-narrative-report-v1.2",
+  "source": {
+    "generatedFrom": "llm_report_input",
+    "llmInputSchemaVersion": "demo-redacted-input-v1",
+    "generationMode": "template_mock"
+  },
+  "title": "The Steady Regulator: Balancing Drive, Caution, and Recovery",
+  "oneLineSummary": "This demo profile suggests someone who can move with purpose, but who also needs enough emotional safety and recovery space to stay open and effective.",
+  "overallSummary": {
+    "title": "Overall Pattern",
+    "body": "The current HTP reflection points to a person who may carry both achievement energy and protective caution. On the outside, they may appear composed and capable. Internally, they may spend more effort monitoring tension, reading the room, and deciding when it feels safe to express themselves. This report frames those signals as reflective patterns, not fixed traits or diagnoses."
+  },
+  "archetypeSection": {
+    "title": "Core Archetype",
+    "primaryArchetypeId": "achievement_pressure_regulator",
+    "primaryArchetypeName": "Achievement Pressure Regulator",
+    "body": "This archetype describes a flow where motivation and self-monitoring appear together. The person may care about doing things well, yet become cautious when expectations are unclear or relationships feel emotionally loaded. The strength of this pattern is responsibility; the growth edge is learning how to keep standards without turning every situation into a test of self-worth.",
+    "secondaryNotes": [
+      "A relationship energy pattern is also present: connection matters, but too much emotional demand can quickly become tiring.",
+      "A protective expression pattern may appear when the person needs time to assess safety before speaking openly."
+    ],
+    "reflectionFocus": "Where do high standards help you move forward, and where do they quietly increase pressure?"
+  },
+  "corePatternSection": {
+    "title": "Core Patterns",
+    "intro": "These patterns describe the main flows visible in the synthetic demo report.",
+    "items": [
+      {
+        "patternId": "achievement_anxiety",
+        "patternName": "Drive Under Pressure",
+        "body": "Achievement energy is present, but it may be accompanied by tension when results feel uncertain. The person may prepare carefully, scan for mistakes, and feel responsible for keeping things under control.",
+        "evidence": [
+          "Achievement drive above baseline",
+          "Anxiety signal above baseline"
+        ],
+        "lifeExamples": [
+          "Preparing more than others can see because the result feels important.",
+          "Feeling calm only after the next step is clearly defined."
+        ],
+        "whenThisAppears": [
+          "When expectations are high but feedback is vague.",
+          "When the person is responsible for outcomes that affect others."
+        ],
+        "growthHints": [
+          "Separate useful preparation from pressure-driven overchecking.",
+          "Name the smallest next step instead of carrying the whole outcome at once."
+        ],
+        "reflectionQuestion": "When does preparation support you, and when does it become a way to manage anxiety?"
+      },
+      {
+        "patternId": "anxiety_defensiveness",
+        "patternName": "Careful Self-Protection",
+        "body": "The person may be thoughtful about what they reveal and when. This can protect boundaries, but it can also make emotional expression feel delayed or overly controlled.",
+        "evidence": [
+          "Anxiety signal above baseline",
+          "Defensiveness signal strongly elevated"
+        ],
+        "lifeExamples": [
+          "Needing time before sharing an honest reaction.",
+          "Appearing composed while privately sorting through tension."
+        ],
+        "whenThisAppears": [
+          "When the social environment feels evaluative.",
+          "When trust is still being established."
+        ],
+        "growthHints": [
+          "Use small, low-risk statements before deeper disclosure.",
+          "Notice whether distance is protecting energy or preventing support."
+        ],
+        "reflectionQuestion": "What helps you feel safe enough to speak more directly?"
+      }
+    ]
+  },
+  "tensionSection": {
+    "title": "Tension Patterns",
+    "intro": "Tension patterns describe signals that can coexist rather than cancel each other out.",
+    "items": [
+      {
+        "patternId": "relationship_need_withdrawal",
+        "patternName": "Connection With Recovery Space",
+        "body": "There may be a sincere wish for connection alongside a need to step back when emotional demand becomes too intense. This is not lack of care; it may be a way of managing capacity.",
+        "evidence": [
+          "Relationship need above baseline",
+          "Withdrawal signal elevated"
+        ],
+        "lifeExamples": [
+          "Enjoying meaningful conversations but needing quiet afterward.",
+          "Wanting closeness while resisting pressure to respond immediately."
+        ],
+        "whenThisAppears": [
+          "After emotionally dense conversations.",
+          "When others expect fast availability."
+        ],
+        "growthHints": [
+          "Plan recovery space as part of connection, not as a failure of connection.",
+          "Use simple boundary language before withdrawing completely."
+        ],
+        "reflectionQuestion": "How can you stay connected without ignoring your need for recovery?"
+      }
+    ]
+  },
+  "resourceSection": {
+    "title": "Balance Resources",
+    "intro": "These are stabilizing cues that may support the person when pressure rises.",
+    "items": [
+      {
+        "resourceId": "reflective_inner_organization",
+        "resourceName": "Reflective Inner Organization",
+        "body": "The report suggests an ability to observe internal patterns and organize them into language. This can become a stabilizing resource when used gently rather than critically.",
+        "evidenceLevel": "clear",
+        "evidenceLabel": "Clear support cue",
+        "stableEvidence": [
+          "Consistent self-monitoring signal",
+          "Organized reflection pattern"
+        ],
+        "supportiveEvidence": [
+          "Can notice pressure before it becomes overwhelming",
+          "Can translate tension into practical next steps"
+        ],
+        "relatedPatterns": [
+          "Drive Under Pressure",
+          "Careful Self-Protection"
+        ],
+        "reflectionQuestion": "How can self-awareness become supportive rather than self-critical?"
+      },
+      {
+        "resourceId": "recovery_resilience_flow",
+        "resourceName": "Recovery Rhythm",
+        "body": "Recovery appears important for maintaining clarity. The person may function best when effort and quiet reset time are treated as one rhythm.",
+        "evidenceLevel": "available",
+        "evidenceLabel": "Available support cue",
+        "stableEvidence": [
+          "Need for recovery after relational or performance load"
+        ],
+        "supportiveEvidence": [
+          "Clear boundaries may restore energy faster",
+          "Scheduled pauses can reduce pressure buildup"
+        ],
+        "relatedPatterns": [
+          "Connection With Recovery Space"
+        ],
+        "reflectionQuestion": "What kind of reset actually restores your energy?"
+      }
+    ]
+  },
+  "mbtiHtpComparisonSection": {
+    "title": "MBTI Context Comparison",
+    "available": true,
+    "body": "The self-reported ENTJ context may explain why the person values direction, competence, and visible progress. The HTP pattern adds nuance: even when outward drive is strong, the person may still need emotional safety and recovery space. The two views are best read together rather than as competing labels.",
+    "keySignals": [
+      "Direction and responsibility may be visible externally.",
+      "Protective caution may be more private than public.",
+      "Recovery space helps drive remain sustainable."
+    ]
+  },
+  "reflectionSection": {
+    "title": "Reflection Questions",
+    "intro": "Use these questions as prompts for self-observation. They are not diagnostic criteria.",
+    "questions": [
+      "Where do high standards help you feel focused, and where do they become pressure?",
+      "What signals tell you that you need recovery space before you become distant?",
+      "What kind of environment helps you speak directly without feeling overexposed?",
+      "When you look composed, what might still be happening internally?"
+    ],
+    "featuredQuestion": "What would it look like to keep your standards while being less harsh with yourself?",
+    "questionGroups": [
+      {
+        "title": "Pressure and Standards",
+        "questions": [
+          "Which expectations are truly yours?",
+          "Which expectations are inherited from the room around you?"
+        ]
+      },
+      {
+        "title": "Connection and Recovery",
+        "questions": [
+          "When do you need quiet because you are avoiding, and when because you are restoring?",
+          "How can you communicate that difference earlier?"
+        ]
+      }
+    ]
+  },
+  "growthDirectionSection": {
+    "title": "Growth Direction",
+    "body": "The growth direction is not to remove pressure or caution, but to give both a healthier role. Drive can remain a strength when it is paired with recovery. Protection can remain useful when it does not block every form of support.",
+    "suggestions": [
+      "Name the smallest next step before trying to solve the entire outcome.",
+      "Schedule recovery time after emotionally dense interactions.",
+      "Practice one clear, low-risk sentence before withdrawing completely."
+    ],
+    "smallExperiments": [
+      "After one demanding task, write down what was enough rather than what was missing.",
+      "Use a short boundary phrase such as: I need a little time, but I do want to come back to this.",
+      "Track which environments make direct expression easier."
+    ],
+    "nextStepQuestions": [
+      "Which kind of pressure is useful, and which kind is only exhausting?",
+      "What is one boundary that would help connection last longer?"
+    ]
+  },
+  "conversationStarterSection": {
+    "title": "Conversation Starters",
+    "intro": "These sentences can help translate the report into safe, practical dialogue.",
+    "starters": [
+      "I sometimes need time to process before I can answer honestly.",
+      "I care about doing this well, but I am trying not to turn it into pressure.",
+      "If I step back, it may mean I am trying to recover rather than disconnect."
+    ]
+  },
+  "safetyNote": "This demo report is a non-diagnostic self-reflection aid. It does not replace professional assessment, counseling, diagnosis, or treatment.",
+  "meta": {
+    "language": "ko",
+    "nonDiagnostic": true,
+    "generatedAt": "2026-06-28T00:00:00Z",
+    "warnings": [
+      "Synthetic portfolio demo data."
+    ]
+  }
+}

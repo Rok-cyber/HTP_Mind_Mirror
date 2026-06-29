@@ -1,0 +1,15 @@
+@if (hasListItems(section?.starters)) {
+  <section class="report-card">
+    <p class="section-kicker">Continue the Conversation</p>
+    <h2>{{ displayReportText(section?.title) || 'Conversation Starters' }}</h2>
+    @if (section?.intro) {
+      <p class="section-intro">{{ displayReportText(section?.intro) }}</p>
+    }
+    <div class="starter-list">
+      @for (starter of section?.starters; track trackText($index, starter)) {
+        <blockquote>{{ displayReportText(starter) }}</blockquote>
+      }
+    </div>
+    <button type="button" class="future-chat-button" disabled>AI conversation coming soon</button>
+  </section>
+}

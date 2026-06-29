@@ -1,0 +1,19 @@
+@if (getCards().length > 0) {
+  <section class="discovery-section" aria-labelledby="premium-discovery-title">
+    <div class="discovery-header">
+      <p>DISCOVERY NOTES</p>
+      <h2 id="premium-discovery-title">Three Findings in This Report</h2>
+      <span>A short preview of the flows worth reviewing first. Start with whatever feels relevant.</span>
+    </div>
+
+    <div class="discovery-grid">
+      @for (card of getCards(); track trackCard($index, card)) {
+        <article class="discovery-card">
+          <span>{{ card.eyebrow }}</span>
+          <h3>{{ card.title }}</h3>
+          <p>{{ card.body }}</p>
+        </article>
+      }
+    </div>
+  </section>
+}

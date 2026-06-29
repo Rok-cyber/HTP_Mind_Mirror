@@ -1,0 +1,79 @@
+<main class="admin-profile-page">
+  <section class="page-heading">
+    <div class="breadcrumb">
+      <a routerLink="/admin/dashboard">대시보드</a>
+      <span>/</span>
+      <a routerLink="/admin/sketchbooks">전체 스케치북</a>
+      <span>/</span>
+      <span>MBTI 수정</span>
+    </div>
+    <h1>스케치북 MBTI 수정</h1>
+    <p>
+      프리미엄 리포트의 MBTI 비교 맥락에 쓰이는 자기 인식(me)과 타인 인식(other) 값을 관리합니다.
+      이미 생성된 프리미엄 리포트는 새로 생성해야 변경값이 반영됩니다.
+    </p>
+  </section>
+
+  <section class="profile-card">
+    @if (state$ | async; as state) {
+      @if (state.status === 'loading') {
+        <p class="state-message">MBTI 정보를 불러오는 중입니다.</p>
+      } @else if (state.status === 'error') {
+        <div class="alert alert-error">{{ state.message }}</div>
+        <a routerLink="/admin/sketchbooks" class="secondary-link">목록으로 돌아가기</a>
+      } @else {
+        <div class="card-header">
+          <div>
+            <p class="eyebrow">sb_no {{ state.sbNo }}</p>
+            <h2>MBTI 프로필</h2>
+          </div>
+          <a routerLink="/admin/sketchbooks" class="secondary-link">목록으로</a>
+        </div>
+
+        @if (notice) {
+          <div class="alert alert-success">{{ notice }}</div>
+        }
+
+        @if (error) {
+          <div class="alert alert-error">{{ error }}</div>
+        }
+
+        <form [formGroup]="form" (ngSubmit)="save()" class="profile-form">
+          <label class="field">
+            <span>내가 보는 나 (me)</span>
+            <select formControlName="mbtiSelf">
+              <option value="">선택 안 함</option>
+              @for (type of mbtiTypes; track type) {
+                <option [value]="type">{{ type }}</option>
+              }
+            </select>
+          </label>
+
+          <label class="field">
+            <span>타인이 보는 나 (other)</span>
+            <select formControlName="mbtiOthers">
+              <option value="">선택 안 함</option>
+              @for (type of mbtiTypes; track type) {
+                <option [value]="type">{{ type }}</option>
+              }
+            </select>
+          </label>
+
+          <div class="help-box">
+            <strong>저장 위치</strong>
+            <p>이 값은 <code>mde_sketchbook_profile.mbti_self</code>, <code>mbti_others</code>에 저장됩니다. 점수/패턴/아키타입 계산 방식은 변경하지 않습니다.</p>
+          </div>
+
+          <div class="actions">
+            <button type="button" class="ghost-button" [disabled]="saving" (click)="form.setValue({ mbtiSelf: '', mbtiOthers: '' })">
+              선택 해제
+            </button>
+            <button type="submit" class="primary-button" [disabled]="saving">
+              {{ saving ? '저장 중...' : '저장' }}
+            </button>
+          </div>
+        </form>
+      }
+    }
+  </section>
+</main>

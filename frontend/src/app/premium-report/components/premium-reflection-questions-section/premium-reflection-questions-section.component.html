@@ -1,0 +1,59 @@
+@if (shouldRender()) {
+  <section class="report-card">
+    <p class="section-kicker">Reflection Questions</p>
+    <h2>{{ displayReportText(section?.title) || 'Self-Reflection Questions' }}</h2>
+    @if (section?.intro) {
+      <p class="section-intro">{{ displayReportText(section?.intro) }}</p>
+    }
+
+    @if (section?.featuredQuestion) {
+      <div class="featured-question">
+        <span>Key Question</span>
+        <p>{{ displayReportText(section?.featuredQuestion) }}</p>
+      </div>
+    }
+
+    @if (hasQuestionGroups()) {
+      <div class="question-group-grid">
+        @for (group of section?.questionGroups; track group.title) {
+          @if (hasListItems(group.questions)) {
+            <article class="question-group-card">
+              <h3>{{ displayReportText(group.title) || 'Question Group' }}</h3>
+              <ol class="question-list question-list--grouped">
+                @for (question of group.questions; track trackText($index, question)) {
+                  <li>
+                    <span>{{ $index + 1 }}</span>
+                    <p>{{ displayReportText(question) }}</p>
+                  </li>
+                }
+              </ol>
+            </article>
+          }
+        }
+      </div>
+    }
+
+    @if (hasListItems(getAdditionalQuestions())) {
+      <div class="sub-block">
+        <h3>Additional Questions to Consider</h3>
+        <ol class="question-list">
+          @for (question of getAdditionalQuestions(); track trackText($index, question)) {
+            <li>
+              <span>{{ $index + 1 }}</span>
+              <p>{{ displayReportText(question) }}</p>
+            </li>
+          }
+        </ol>
+      </div>
+    } @else if (!hasQuestionGroups() && hasListItems(section?.questions)) {
+      <ol class="question-list">
+        @for (question of section?.questions; track trackText($index, question)) {
+          <li>
+            <span>{{ $index + 1 }}</span>
+            <p>{{ displayReportText(question) }}</p>
+          </li>
+        }
+      </ol>
+    }
+  </section>
+}

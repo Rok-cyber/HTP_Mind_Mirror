@@ -1,0 +1,129 @@
+.report-card {
+  margin-top: 28px;
+  border: 1px solid rgba(17, 24, 39, 0.09);
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: 0 24px 80px rgba(17, 24, 39, 0.08);
+  padding: clamp(24px, 4vw, 40px);
+}
+
+.section-kicker,
+.featured-question span {
+  color: #49675f;
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+
+h2 {
+  margin: 10px 0 0;
+  color: #111827;
+  font-size: clamp(1.5rem, 3vw, 2.25rem);
+  font-weight: 900;
+  letter-spacing: 0;
+  line-height: 1.25;
+}
+
+.section-intro {
+  margin: 18px 0 0;
+  max-width: 780px;
+  color: #374151;
+  line-height: 1.85;
+}
+
+.featured-question {
+  margin-top: 22px;
+  border: 1px solid rgba(217, 164, 65, 0.28);
+  border-radius: 24px;
+  background: linear-gradient(180deg, rgba(217, 164, 65, 0.16), rgba(217, 164, 65, 0.08));
+  padding: clamp(22px, 4vw, 32px);
+}
+
+.featured-question span {
+  color: #8a641d;
+}
+
+.featured-question p {
+  margin: 10px 0 0;
+  color: #111827;
+  font-size: clamp(1.15rem, 2vw, 1.45rem);
+  font-weight: 850;
+  line-height: 1.65;
+}
+
+.question-group-grid {
+  display: grid;
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.question-group-card {
+  border: 1px solid rgba(17, 24, 39, 0.08);
+  border-radius: 22px;
+  background: #fcfcfa;
+  padding: 20px;
+}
+
+h3 {
+  margin: 0 0 10px;
+  color: #111827;
+  font-size: 0.95rem;
+  font-weight: 850;
+}
+
+.question-list {
+  display: grid;
+  gap: 12px;
+  margin: 22px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.question-list--grouped {
+  margin-top: 12px;
+}
+
+.question-list li {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 14px;
+  border: 1px solid rgba(17, 24, 39, 0.08);
+  border-radius: 18px;
+  background: #fcfcfa;
+  padding: 18px;
+}
+
+.question-list span {
+  display: grid;
+  width: 32px;
+  height: 32px;
+  place-items: center;
+  border-radius: 999px;
+  background: #111827;
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 900;
+}
+
+.question-list p {
+  margin: 2px 0 0;
+  color: #111827;
+  font-weight: 720;
+  line-height: 1.7;
+}
+
+.sub-block {
+  margin-top: 24px;
+  border-top: 1px solid rgba(17, 24, 39, 0.08);
+  padding-top: 20px;
+}
+
+.sub-block .question-list {
+  margin-top: 14px;
+}
+
+@media (min-width: 760px) {
+  .question-group-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
