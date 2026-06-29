@@ -24,6 +24,20 @@ This project is not just a static UI. The interesting product and engineering wo
 - User-facing language is governed by non-diagnostic tone and safety rules.
 - Proprietary scoring, prompt, and interpretation logic is intentionally redacted from the public copy.
 
+## Product Screenshots
+
+### Basic HTP Report
+
+![Basic HTP report overview](screenshot/1.png)
+
+### Premium Report
+
+![Premium self-reflection report hero and summary](screenshot/2.png)
+
+### Premium Report Detail
+
+![Premium report detail sections](screenshot/3.png)
+
 ## Architecture
 
 ```text
